@@ -1,0 +1,32 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Feedback</mat-card-title>
+    <mat-card-subtitle>Template-driven form example</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <form #feedbackForm="ngForm" (ngSubmit)="onSubmit(feedbackForm)">
+      <mat-form-field appearance="fill">
+        <mat-label>Name</mat-label>
+        <input matInput name="name" [(ngModel)]="feedback.name" required />
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Email</mat-label>
+        <input matInput name="email" [(ngModel)]="feedback.email" email required />
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Message</mat-label>
+        <textarea matInput name="message" [(ngModel)]="feedback.message" rows="4" required></textarea>
+      </mat-form-field>
+
+      <div class="actions">
+        <button mat-flat-button color="primary" type="submit" [disabled]="feedbackForm.invalid">
+          Send feedback
+        </button>
+      </div>
+
+      <p *ngIf="submitted" class="success">Thank you! We value your feedback.</p>
+    </form>
+  </mat-card-content>
+</mat-card>

@@ -1,0 +1,198 @@
+{
+  "movies": [
+    {
+      "id": 1,
+      "title": "Inception",
+      "genre": "Sci-Fi",
+      "language": "English",
+      "durationMinutes": 148,
+      "rating": 8.8,
+      "posterUrl": "https://images.unsplash.com/photo-1505685296765-3a2736de412f?auto=format&fit=crop&w=600&q=60",
+      "description": "A thief who steals corporate secrets through dream-sharing technology is given the inverse task of planting an idea into a CEO's mind.",
+      "cast": ["Leonardo DiCaprio", "Joseph Gordon-Levitt", "Elliot Page"],
+      "releaseDate": "2010-07-16"
+    },
+    {
+      "id": 2,
+      "title": "Interstellar",
+      "genre": "Sci-Fi",
+      "language": "English",
+      "durationMinutes": 169,
+      "rating": 8.6,
+      "posterUrl": "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=600&q=60",
+      "description": "A team of explorers travel through a wormhole in space in an attempt to ensure humanity's survival.",
+      "cast": ["Matthew McConaughey", "Anne Hathaway", "Jessica Chastain"],
+      "releaseDate": "2014-11-07"
+    },
+    {
+      "id": 3,
+      "title": "La La Land",
+      "genre": "Drama",
+      "language": "English",
+      "durationMinutes": 128,
+      "rating": 8.0,
+      "posterUrl": "https://images.unsplash.com/photo-1497032628192-86f99bcd76bc?auto=format&fit=crop&w=600&q=60",
+      "description": "A jazz pianist falls for an aspiring actress in Los Angeles, balancing love and ambitions.",
+      "cast": ["Ryan Gosling", "Emma Stone", "John Legend"],
+      "releaseDate": "2016-12-09"
+    },
+    {
+      "id": 4,
+      "title": "Parasite",
+      "genre": "Thriller",
+      "language": "Korean",
+      "durationMinutes": 132,
+      "rating": 8.6,
+      "posterUrl": "https://images.unsplash.com/photo-1464375117522-1311d6a5b81f?auto=format&fit=crop&w=600&q=60",
+      "description": "Greed and class discrimination threaten the newly formed symbiotic relationship between the wealthy Park family and the destitute Kim clan.",
+      "cast": ["Song Kang-ho", "Lee Sun-kyun", "Cho Yeo-jeong"],
+      "releaseDate": "2019-05-30"
+    },
+    {
+      "id": 5,
+      "title": "Spirited Away",
+      "genre": "Animation",
+      "language": "Japanese",
+      "durationMinutes": 125,
+      "rating": 8.5,
+      "posterUrl": "https://images.unsplash.com/photo-1502134249126-9f3755a50d78?auto=format&fit=crop&w=600&q=60",
+      "description": "During her family's move to the suburbs, a sullen 10-year-old girl wanders into a world ruled by gods, witches, and spirits.",
+      "cast": ["Rumi Hiiragi", "Miyu Irino", "Mari Natsuki"],
+      "releaseDate": "2001-07-20"
+    }
+  ],
+  "theatres": [
+    {
+      "id": 1,
+      "name": "Galaxy Cinemas",
+      "location": "Downtown",
+      "isPremium": true,
+      "amenities": ["Recliners", "Dolby Atmos", "IMAX"]
+    },
+    {
+      "id": 2,
+      "name": "Sunset Multiplex",
+      "location": "West End",
+      "isPremium": false,
+      "amenities": ["4K Screens", "Snacks", "Parking"]
+    },
+    {
+      "id": 3,
+      "name": "Aurora Screens",
+      "location": "City Center",
+      "isPremium": true,
+      "amenities": ["Dolby Vision", "Loungers", "Cafe"]
+    }
+  ],
+  "showtimes": [
+    {
+      "id": 101,
+      "movieId": 1,
+      "theatreId": 1,
+      "startTime": "2026-01-21T18:00:00",
+      "price": 14.5,
+      "availableSeats": 42,
+      "totalSeats": 60,
+      "screenName": "IMAX",
+      "isPremium": true
+    },
+    {
+      "id": 102,
+      "movieId": 1,
+      "theatreId": 2,
+      "startTime": "2026-01-21T21:30:00",
+      "price": 11.5,
+      "availableSeats": 10,
+      "totalSeats": 60,
+      "screenName": "Screen 2",
+      "isPremium": false
+    },
+    {
+      "id": 103,
+      "movieId": 2,
+      "theatreId": 3,
+      "startTime": "2026-01-21T17:15:00",
+      "price": 13.0,
+      "availableSeats": 28,
+      "totalSeats": 70,
+      "screenName": "Dolby Vision",
+      "isPremium": true
+    },
+    {
+      "id": 104,
+      "movieId": 3,
+      "theatreId": 2,
+      "startTime": "2026-01-21T19:00:00",
+      "price": 10.5,
+      "availableSeats": 0,
+      "totalSeats": 50,
+      "screenName": "Screen 1",
+      "isPremium": false
+    },
+    {
+      "id": 105,
+      "movieId": 4,
+      "theatreId": 1,
+      "startTime": "2026-01-22T20:15:00",
+      "price": 12.0,
+      "availableSeats": 5,
+      "totalSeats": 55,
+      "screenName": "Screen 4",
+      "isPremium": true
+    },
+    {
+      "id": 106,
+      "movieId": 5,
+      "theatreId": 3,
+      "startTime": "2026-01-22T16:45:00",
+      "price": 9.5,
+      "availableSeats": 22,
+      "totalSeats": 65,
+      "screenName": "Screen 7",
+      "isPremium": false
+    }
+  ],
+  "seatMaps": [
+    {
+      "showtimeId": 101,
+      "seats": [
+        { "id": "A1", "label": "A1", "row": "A", "number": 1, "status": "available", "isPremium": true },
+        { "id": "A2", "label": "A2", "row": "A", "number": 2, "status": "reserved", "isPremium": true },
+        { "id": "A3", "label": "A3", "row": "A", "number": 3, "status": "available", "isPremium": true },
+        { "id": "A4", "label": "A4", "row": "A", "number": 4, "status": "booked", "isPremium": true },
+        { "id": "A5", "label": "A5", "row": "A", "number": 5, "status": "available", "isPremium": true },
+        { "id": "A6", "label": "A6", "row": "A", "number": 6, "status": "available", "isPremium": true },
+        { "id": "B1", "label": "B1", "row": "B", "number": 1, "status": "available" },
+        { "id": "B2", "label": "B2", "row": "B", "number": 2, "status": "available" },
+        { "id": "B3", "label": "B3", "row": "B", "number": 3, "status": "reserved" },
+        { "id": "B4", "label": "B4", "row": "B", "number": 4, "status": "available" },
+        { "id": "B5", "label": "B5", "row": "B", "number": 5, "status": "available" },
+        { "id": "B6", "label": "B6", "row": "B", "number": 6, "status": "available" },
+        { "id": "C1", "label": "C1", "row": "C", "number": 1, "status": "available" },
+        { "id": "C2", "label": "C2", "row": "C", "number": 2, "status": "available" },
+        { "id": "C3", "label": "C3", "row": "C", "number": 3, "status": "available" },
+        { "id": "C4", "label": "C4", "row": "C", "number": 4, "status": "available" },
+        { "id": "C5", "label": "C5", "row": "C", "number": 5, "status": "reserved" },
+        { "id": "C6", "label": "C6", "row": "C", "number": 6, "status": "available" },
+        { "id": "D1", "label": "D1", "row": "D", "number": 1, "status": "available" },
+        { "id": "D2", "label": "D2", "row": "D", "number": 2, "status": "available" },
+        { "id": "D3", "label": "D3", "row": "D", "number": 3, "status": "reserved" },
+        { "id": "D4", "label": "D4", "row": "D", "number": 4, "status": "available" },
+        { "id": "D5", "label": "D5", "row": "D", "number": 5, "status": "booked" },
+        { "id": "D6", "label": "D6", "row": "D", "number": 6, "status": "available" }
+      ]
+    },
+    {
+      "showtimeId": 104,
+      "seats": [
+        { "id": "A1", "label": "A1", "row": "A", "number": 1, "status": "booked" },
+        { "id": "A2", "label": "A2", "row": "A", "number": 2, "status": "booked" },
+        { "id": "A3", "label": "A3", "row": "A", "number": 3, "status": "booked" },
+        { "id": "A4", "label": "A4", "row": "A", "number": 4, "status": "booked" },
+        { "id": "A5", "label": "A5", "row": "A", "number": 5, "status": "booked" },
+        { "id": "A6", "label": "A6", "row": "A", "number": 6, "status": "booked" }
+      ]
+    }
+  ],
+  "bookings": []
+}

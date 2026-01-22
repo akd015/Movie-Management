@@ -1,0 +1,33 @@
+.mat-table {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.04);
+  color: #fff;
+}
+
+th.mat-header-cell,
+td.mat-cell {
+  border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+.theatre-cell {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.name {
+  font-weight: 700;
+}
+
+.location {
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+.sold-out {
+  opacity: 0.5;
+}
+
+.premium {
+  background: linear-gradient(90deg, rgba(255, 215, 0, 0.05), transparent);
+}

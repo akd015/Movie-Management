@@ -1,0 +1,71 @@
+<section class="filters" [formGroup]="filterForm">
+  <mat-form-field appearance="fill">
+    <mat-label>Search</mat-label>
+    <input matInput placeholder="Title, genre, language" formControlName="query" />
+    <button *ngIf="filterForm.value.query" mat-icon-button matSuffix aria-label="Clear" (click)="filterForm.patchValue({ query: '' })">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Genre</mat-label>
+    <mat-select formControlName="genre">
+      <mat-option value="">All</mat-option>
+      <mat-option *ngFor="let genre of genres" [value]="genre">{{ genre }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Language</mat-label>
+    <mat-select formControlName="language">
+      <mat-option value="">All</mat-option>
+      <mat-option *ngFor="let language of languages" [value]="language">{{ language }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Min rating</mat-label>
+    <input matInput type="number" min="0" max="10" formControlName="minRating" />
+  </mat-form-field>
+</section>
+
+<section class="movie-grid" *ngIf="filteredMovies$ | async as movies">
+  <mat-card *ngFor="let movie of movies" class="movie-card">
+    <img mat-card-image [src]="movie.posterUrl" [alt]="movie.title" />
+    <mat-card-header>
+      <mat-card-title>{{ movie.title }}</mat-card-title>
+      <mat-card-subtitle>{{ movie.genre }} • {{ movie.language }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p class="description">{{ movie.description }}</p>
+      <div class="meta">
+        <span><mat-icon>schedule</mat-icon>{{ movie.durationMinutes }} mins</span>
+        <span><mat-icon>star</mat-icon>{{ movie.rating }}/10</span>
+      </div>
+      <mat-chip-set aria-label="Cast">
+        <mat-chip *ngFor="let actor of movie.cast" color="accent" selected>{{ actor }}</mat-chip>
+      </mat-chip-set>
+    </mat-card-content>
+    <mat-card-actions>
+      <a
+        mat-stroked-button
+        color="accent"
+        [routerLink]="['/movies', movie.id]"
+        (click)="selectMovie(movie)"
+      >
+        Details
+      </a>
+      <span class="spacer"></span>
+      <a
+        mat-flat-button
+        color="primary"
+        [routerLink]="['/showtimes', movie.id]"
+        (click)="selectMovie(movie)"
+      >
+        View showtimes
+      </a>
+    </mat-card-actions>
+  </mat-card>
+
+  <p *ngIf="movies.length === 0" class="empty">No movies match the filters yet.</p>
+</section>

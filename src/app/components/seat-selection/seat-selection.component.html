@@ -1,0 +1,81 @@
+<mat-card *ngIf="showtime">
+  <mat-card-header>
+    <mat-card-title>{{ movie?.title }}</mat-card-title>
+    <mat-card-subtitle>
+      {{ showtime.startTime | date: 'fullDate' }} • {{ showtime.startTime | date: 'shortTime' }}
+    </mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <mat-horizontal-stepper linear #stepper>
+      <mat-step [completed]="canContinue()">
+        <ng-template matStepLabel>Select seats</ng-template>
+        <div class="seat-map">
+          <div class="seat-row" *ngFor="let row of seatRows">
+            <div class="row-label">{{ row.row }}</div>
+            <button
+              *ngFor="let seat of row.seats"
+              mat-stroked-button
+              [color]="seat.status === 'selected' ? 'accent' : seat.isPremium ? 'warn' : undefined"
+              [disabled]="seat.status === 'booked' || seat.status === 'reserved'"
+              [class.selected]="seat.status === 'selected'"
+              [class.booked]="seat.status === 'booked'"
+              [class.reserved]="seat.status === 'reserved'"
+              (click)="onToggleSeat(seat)"
+            >
+              {{ seat.label }}
+            </button>
+          </div>
+        </div>
+        <div class="selection-summary">
+          <div>
+            Selected:
+            <mat-chip-set>
+              <mat-chip *ngFor="let seat of selectedSeats$ | async" color="accent" selected>
+                {{ seat.label }}
+              </mat-chip>
+            </mat-chip-set>
+          </div>
+          <div class="total">Total: {{ totalAmount() | currency }}</div>
+        </div>
+        <div class="step-actions">
+          <button mat-flat-button color="primary" [disabled]="!canContinue()" matStepperNext>
+            Continue
+          </button>
+        </div>
+      </mat-step>
+
+      <mat-step>
+        <ng-template matStepLabel>Customer details</ng-template>
+        <form class="customer-form" [formGroup]="customerForm" (ngSubmit)="submit(stepper)">
+          <mat-form-field appearance="fill">
+            <mat-label>Name</mat-label>
+            <input matInput formControlName="customerName" required />
+            <mat-error *ngIf="customerForm.controls.customerName.invalid">
+              Name is required
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email" required />
+            <mat-error *ngIf="customerForm.controls.email.invalid">Enter a valid email</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>Phone</mat-label>
+            <input matInput formControlName="phone" required />
+            <mat-error *ngIf="customerForm.controls.phone.invalid">
+              Enter a valid phone number
+            </mat-error>
+          </mat-form-field>
+
+          <div class="step-actions">
+            <button mat-stroked-button matStepperPrevious>Back</button>
+            <button mat-flat-button color="accent" type="submit">Confirm booking</button>
+          </div>
+        </form>
+      </mat-step>
+    </mat-horizontal-stepper>
+  </mat-card-content>
+</mat-card>

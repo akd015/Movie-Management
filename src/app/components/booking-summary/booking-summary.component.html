@@ -1,0 +1,52 @@
+<ng-container *ngIf="booking$ | async as booking; else emptyState">
+  <mat-card class="summary-card">
+    <mat-card-header>
+      <mat-card-title>Booking Confirmed</mat-card-title>
+      <mat-card-subtitle>Reference #{{ booking.id }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-list>
+        <mat-list-item>
+          <span matListItemTitle>Movie</span>
+          <span matListItemLine>{{ (movie$ | async)?.title }}</span>
+        </mat-list-item>
+        <mat-list-item>
+          <span matListItemTitle>Showtime</span>
+          <span matListItemLine>{{ (showtime$ | async)?.startTime | date: 'medium' }}</span>
+        </mat-list-item>
+        <mat-list-item>
+          <span matListItemTitle>Seats</span>
+          <span matListItemLine>{{ booking.seats.join(', ') }}</span>
+        </mat-list-item>
+        <mat-list-item>
+          <span matListItemTitle>Name</span>
+          <span matListItemLine>{{ booking.customerName }}</span>
+        </mat-list-item>
+        <mat-list-item>
+          <span matListItemTitle>Email</span>
+          <span matListItemLine>{{ booking.email }}</span>
+        </mat-list-item>
+        <mat-list-item>
+          <span matListItemTitle>Phone</span>
+          <span matListItemLine>{{ booking.phone }}</span>
+        </mat-list-item>
+        <mat-list-item>
+          <span matListItemTitle>Total</span>
+          <span matListItemLine>{{ booking.totalAmount | currency }}</span>
+        </mat-list-item>
+      </mat-list>
+    </mat-card-content>
+    <mat-card-actions>
+      <a mat-stroked-button color="accent" routerLink="/movies">Book another</a>
+    </mat-card-actions>
+  </mat-card>
+</ng-container>
+
+<ng-template #emptyState>
+  <mat-card class="summary-card">
+    <mat-card-content>
+      <p>No booking found. Please select a movie to begin.</p>
+      <a mat-flat-button color="primary" routerLink="/movies">Browse movies</a>
+    </mat-card-content>
+  </mat-card>
+</ng-template>

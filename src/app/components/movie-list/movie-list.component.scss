@@ -1,0 +1,49 @@
+.filters {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+  margin: 12px 0 24px;
+}
+
+.movie-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.movie-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+}
+
+mat-card-title {
+  font-weight: 700;
+}
+
+.description {
+  min-height: 48px;
+  color: rgba(255, 255, 255, 0.86);
+}
+
+.meta {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin: 8px 0;
+
+  mat-icon {
+    font-size: 16px;
+    margin-right: 4px;
+  }
+}
+
+.spacer {
+  flex: 1;
+}
+
+.empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  opacity: 0.8;
+}

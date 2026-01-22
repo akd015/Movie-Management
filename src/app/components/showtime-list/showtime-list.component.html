@@ -1,0 +1,59 @@
+<ng-container *ngIf="movie$ | async as movie">
+  <h2>Showtimes for {{ movie.title }}</h2>
+  <table
+    mat-table
+    *ngIf="showtimeRows$ | async as rows"
+    [dataSource]="rows"
+    class="mat-elevation-z2"
+  >
+    <ng-container matColumnDef="theatre">
+      <th mat-header-cell *matHeaderCellDef>Theatre</th>
+      <td mat-cell *matCellDef="let row">
+        <div class="theatre-cell">
+          <mat-icon *ngIf="row.isPremium" color="accent">workspace_premium</mat-icon>
+          <div>
+            <div class="name">{{ row.theatre?.name }}</div>
+            <div class="location">{{ row.theatre?.location }}</div>
+          </div>
+        </div>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="time">
+      <th mat-header-cell *matHeaderCellDef>Time</th>
+      <td mat-cell *matCellDef="let row">{{ row.startTime | date: 'medium' }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="price">
+      <th mat-header-cell *matHeaderCellDef>Price</th>
+      <td mat-cell *matCellDef="let row">{{ row.price | currency }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="seats">
+      <th mat-header-cell *matHeaderCellDef>Seats</th>
+      <td mat-cell *matCellDef="let row">{{ formatSeats(row) }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let row">
+        <button
+          mat-flat-button
+          color="primary"
+          [disabled]="isSoldOut(row)"
+          (click)="onSelect(row)"
+        >
+          Select seats
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr
+      mat-row
+      *matRowDef="let row; columns: displayedColumns"
+      [appHighlightSoldout]="isSoldOut(row)"
+      [premium]="row.isPremium"
+    ></tr>
+  </table>
+</ng-container>
