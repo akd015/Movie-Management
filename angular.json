@@ -36,6 +36,7 @@
           },
           "configurations": {
             "production": {
+              "baseHref": "/Movie-Management/",
               "budgets": [
                 {
                   "type": "initial",
