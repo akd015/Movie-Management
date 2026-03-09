@@ -6,5 +6,9 @@
   <span class="spacer"></span>
   <a mat-button routerLink="/movies" routerLinkActive="active-link">Movies</a>
   <a mat-button routerLink="/booking-summary" routerLinkActive="active-link">My Booking</a>
+  <a mat-button routerLink="/booking-history" routerLinkActive="active-link">History</a>
   <a mat-button routerLink="/feedback" routerLinkActive="active-link">Feedback</a>
+  <button mat-icon-button aria-label="Toggle theme" (click)="toggleTheme()">
+    <mat-icon>{{ (isDarkTheme$ | async) ? 'light_mode' : 'dark_mode' }}</mat-icon>
+  </button>
 </mat-toolbar>

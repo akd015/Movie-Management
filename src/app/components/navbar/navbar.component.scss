@@ -3,8 +3,9 @@
   top: 0;
   z-index: 100;
   backdrop-filter: blur(6px);
-  background: rgba(43, 32, 72, 0.9);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(245, 247, 255, 0.92);
+  border-bottom: 1px solid rgba(24, 28, 40, 0.12);
+  color: inherit;
 }
 
 .brand {
@@ -20,4 +21,9 @@
 
 a.active-link {
   font-weight: 600;
+}
+
+:host-context(.dark-theme) .navbar {
+  background: rgba(43, 32, 72, 0.9);
+  border-bottom-color: rgba(255, 255, 255, 0.08);
 }

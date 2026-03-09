@@ -19,11 +19,14 @@ export class BookingService {
   private selectedShowtimeSubject = new BehaviorSubject<Showtime | null>(null);
   private selectedSeatsSubject = new BehaviorSubject<Seat[]>([]);
   private bookingSummarySubject = new BehaviorSubject<Booking | null>(null);
+  private bookingHistorySubject = new BehaviorSubject<Booking[]>([]);
+  private historyLoaded = false;
 
   readonly selectedMovie$ = this.selectedMovieSubject.asObservable();
   readonly selectedShowtime$ = this.selectedShowtimeSubject.asObservable();
   readonly selectedSeats$ = this.selectedSeatsSubject.asObservable();
   readonly bookingSummary$ = this.bookingSummarySubject.asObservable();
+  readonly bookingHistory$ = this.bookingHistorySubject.asObservable();
 
   constructor(private http: HttpClient) {}
 
@@ -73,6 +76,25 @@ export class BookingService {
     this.bookingSummarySubject.next(null);
   }
 
+  loadBookingHistory(forceReload = false): Observable<Booking[]> {
+    if (this.historyLoaded && !forceReload) {
+      return of(this.bookingHistorySubject.value);
+    }
+
+    return this.http.get<Booking[]>(`${environment.apiBaseUrl}/bookings`).pipe(
+      tap((bookings) => {
+        this.historyLoaded = true;
+        this.bookingHistorySubject.next(this.sortByLatest(bookings));
+      }),
+      catchError(() => {
+        this.historyLoaded = true;
+        const fallback = this.sortByLatest([...fallbackBookings]);
+        this.bookingHistorySubject.next(fallback);
+        return of(fallback);
+      })
+    );
+  }
+
   confirmBooking(details: CustomerDetails): Observable<Booking | null> {
     const movie = this.selectedMovieSubject.value;
     const showtime = this.selectedShowtimeSubject.value;
@@ -96,12 +118,27 @@ export class BookingService {
     };
 
     return this.http.post<Booking>(`${environment.apiBaseUrl}/bookings`, booking).pipe(
-      tap((response) => this.bookingSummarySubject.next(response)),
+      tap((response) => {
+        this.bookingSummarySubject.next(response);
+        this.prependToHistory(response);
+      }),
       catchError(() => {
         this.bookingSummarySubject.next(booking);
         fallbackBookings.push(booking);
+        this.prependToHistory(booking);
         return of(booking);
       })
+    );
+  }
+
+  private prependToHistory(booking: Booking) {
+    const withoutCurrent = this.bookingHistorySubject.value.filter((item) => item.id !== booking.id);
+    this.bookingHistorySubject.next(this.sortByLatest([booking, ...withoutCurrent]));
+  }
+
+  private sortByLatest(bookings: Booking[]) {
+    return bookings.sort(
+      (a, b) => new Date(b.bookedAt).getTime() - new Date(a.bookedAt).getTime()
     );
   }
 }

@@ -7,6 +7,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatStepper, MatStepperModule } from '@angular/material/stepper';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { of, switchMap, tap, map } from 'rxjs';
@@ -86,7 +87,8 @@ export class SeatSelectionComponent implements OnInit {
     private readonly movieService: MovieService,
     private readonly theatreService: TheatreService,
     private readonly bookingService: BookingService,
-    private readonly fb: FormBuilder
+    private readonly fb: FormBuilder,
+    private readonly snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -139,10 +141,16 @@ export class SeatSelectionComponent implements OnInit {
   submit(stepper: MatStepper) {
     if (!this.customerForm.valid || !this.canContinue()) {
       this.customerForm.markAllAsTouched();
+      this.snackBar.open('Please select seats and complete valid customer details.', 'Dismiss', {
+        duration: 3000
+      });
       return;
     }
     const details = this.customerForm.value as CustomerDetails;
     this.bookingService.confirmBooking(details).subscribe(() => {
+      this.snackBar.open('Booking confirmed successfully.', 'Close', {
+        duration: 3000
+      });
       stepper.next();
       this.router.navigate(['/booking-summary']);
     });

@@ -5,6 +5,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { RouterOutlet } from '@angular/router';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { LoadingService } from './services/loading.service';
+import { ThemeService } from './services/theme.service';
 
 @Component({
   selector: 'app-root',
@@ -16,4 +17,8 @@ import { LoadingService } from './services/loading.service';
 export class AppComponent {
   title = 'Movie Booking';
   readonly loading$ = inject(LoadingService).loading$;
+
+  constructor() {
+    inject(ThemeService);
+  }
 }
