@@ -1,8 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpContext } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, catchError, of, tap } from 'rxjs';
 import { Booking, Movie, Seat, Showtime } from '../models';
 import { environment } from '../../environments/environment';
+import { SUPPRESS_ERROR_SNACKBAR } from '../interceptors/http-context.tokens';
 import { fallbackBookings } from './mock-data';
 
 export interface CustomerDetails {
@@ -21,6 +22,7 @@ export class BookingService {
   private bookingSummarySubject = new BehaviorSubject<Booking | null>(null);
   private bookingHistorySubject = new BehaviorSubject<Booking[]>([]);
   private historyLoaded = false;
+  private readonly suppressErrorContext = new HttpContext().set(SUPPRESS_ERROR_SNACKBAR, true);
 
   readonly selectedMovie$ = this.selectedMovieSubject.asObservable();
   readonly selectedShowtime$ = this.selectedShowtimeSubject.asObservable();
@@ -81,7 +83,9 @@ export class BookingService {
       return of(this.bookingHistorySubject.value);
     }
 
-    return this.http.get<Booking[]>(`${environment.apiBaseUrl}/bookings`).pipe(
+    return this.http.get<Booking[]>(`${environment.apiBaseUrl}/bookings`, {
+      context: this.suppressErrorContext
+    }).pipe(
       tap((bookings) => {
         this.historyLoaded = true;
         this.bookingHistorySubject.next(this.sortByLatest(bookings));
@@ -117,7 +121,9 @@ export class BookingService {
       bookedAt: new Date().toISOString()
     };
 
-    return this.http.post<Booking>(`${environment.apiBaseUrl}/bookings`, booking).pipe(
+    return this.http.post<Booking>(`${environment.apiBaseUrl}/bookings`, booking, {
+      context: this.suppressErrorContext
+    }).pipe(
       tap((response) => {
         this.bookingSummarySubject.next(response);
         this.prependToHistory(response);

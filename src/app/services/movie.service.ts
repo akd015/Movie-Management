@@ -1,8 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpContext } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, of, catchError, shareReplay } from 'rxjs';
 import { Movie, Showtime } from '../models';
 import { environment } from '../../environments/environment';
+import { SUPPRESS_ERROR_SNACKBAR } from '../interceptors/http-context.tokens';
 import { fallbackMovies, fallbackShowtimes } from './mock-data';
 
 @Injectable({
@@ -10,11 +11,14 @@ import { fallbackMovies, fallbackShowtimes } from './mock-data';
 })
 export class MovieService {
   private movies$?: ReturnType<MovieService['fetchMovies']>;
+  private readonly suppressErrorContext = new HttpContext().set(SUPPRESS_ERROR_SNACKBAR, true);
 
   constructor(private http: HttpClient) {}
 
   private fetchMovies() {
-    return this.http.get<Movie[]>(`${environment.apiBaseUrl}/movies`).pipe(
+    return this.http.get<Movie[]>(`${environment.apiBaseUrl}/movies`, {
+      context: this.suppressErrorContext
+    }).pipe(
       catchError(() => of(fallbackMovies)),
       shareReplay(1)
     );
@@ -33,7 +37,9 @@ export class MovieService {
 
   getShowtimesForMovie(movieId: number) {
     return this.http
-      .get<Showtime[]>(`${environment.apiBaseUrl}/showtimes?movieId=${movieId}`)
+      .get<Showtime[]>(`${environment.apiBaseUrl}/showtimes?movieId=${movieId}`, {
+        context: this.suppressErrorContext
+      })
       .pipe(
         map((showtimes) => showtimes.sort((a, b) => a.startTime.localeCompare(b.startTime))),
         catchError(() =>
@@ -61,7 +67,9 @@ export class MovieService {
   }
 
   getShowtimeById(id: number) {
-    return this.http.get<Showtime>(`${environment.apiBaseUrl}/showtimes/${id}`).pipe(
+    return this.http.get<Showtime>(`${environment.apiBaseUrl}/showtimes/${id}`, {
+      context: this.suppressErrorContext
+    }).pipe(
       catchError(() => of(fallbackShowtimes.find((s) => s.id === id))),
       map((showtime) => showtime ?? null)
     );
